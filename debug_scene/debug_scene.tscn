@@ -1,0 +1,69 @@
+[gd_scene load_steps=22 format=2]
+
+[ext_resource path="res://level_generation/maze_drawer/maze_drawer.gd" type="Script" id=1]
+[ext_resource path="res://debug_scene/maze_reset.gd" type="Script" id=2]
+[ext_resource path="res://level_generation/level_builder/level_builder.gd" type="Script" id=3]
+[ext_resource path="res://level_generation/level_builder/level_map_creator.gd" type="Script" id=4]
+[ext_resource path="res://debug_scene/tileset/tileset.tres" type="TileSet" id=5]
+[ext_resource path="res://debug_scene/chunks/chunk_objects/Up_Right_Down.tres" type="Resource" id=6]
+[ext_resource path="res://debug_scene/chunks/chunk_objects/Up_Right_Left.tres" type="Resource" id=7]
+[ext_resource path="res://debug_scene/chunks/chunk_objects/Up_Right_Down_Left.tres" type="Resource" id=8]
+[ext_resource path="res://debug_scene/chunks/chunk_objects/Right.tres" type="Resource" id=9]
+[ext_resource path="res://debug_scene/chunks/chunk_objects/Up_Left.tres" type="Resource" id=10]
+[ext_resource path="res://debug_scene/chunks/chunk_objects/Right_Down_Left.tres" type="Resource" id=11]
+[ext_resource path="res://debug_scene/chunks/chunk_objects/Down_Left.tres" type="Resource" id=12]
+[ext_resource path="res://debug_scene/chunks/chunk_objects/Up_Down_Left.tres" type="Resource" id=13]
+[ext_resource path="res://debug_scene/chunks/chunk_objects/Up_Right.tres" type="Resource" id=14]
+[ext_resource path="res://debug_scene/chunks/chunk_objects/Down_Right.tres" type="Resource" id=15]
+[ext_resource path="res://debug_scene/chunks/chunk_objects/Up.tres" type="Resource" id=16]
+[ext_resource path="res://debug_scene/chunks/chunk_objects/Down.tres" type="Resource" id=17]
+[ext_resource path="res://debug_scene/chunks/chunk_objects/Left.tres" type="Resource" id=18]
+[ext_resource path="res://debug_scene/Camera2D.gd" type="Script" id=19]
+[ext_resource path="res://debug_scene/chunks/chunk_objects/Right_Left.tres" type="Resource" id=20]
+[ext_resource path="res://debug_scene/chunks/chunk_objects/Up_Down.tres" type="Resource" id=21]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="LevelBuilder" type="TileMap" parent="."]
+tile_set = ExtResource( 5 )
+cell_size = Vector2( 32, 32 )
+format = 1
+script = ExtResource( 3 )
+
+[node name="LevelMapCreator" type="Node" parent="."]
+script = ExtResource( 4 )
+chunks = [ ExtResource( 17 ), ExtResource( 12 ), ExtResource( 15 ), ExtResource( 18 ), ExtResource( 9 ), ExtResource( 11 ), ExtResource( 16 ), ExtResource( 13 ), ExtResource( 10 ), ExtResource( 14 ), ExtResource( 6 ), ExtResource( 8 ), ExtResource( 7 ), ExtResource( 20 ), ExtResource( 21 ) ]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+zoom = Vector2( 2, 2 )
+script = ExtResource( 19 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="MazeDrawer" type="Node2D" parent="CanvasLayer"]
+position = Vector2( 100, 104 )
+script = ExtResource( 1 )
+
+[node name="MazeResetController" type="Button" parent="CanvasLayer"]
+margin_right = 84.0
+margin_bottom = 20.0
+text = "Regenerate"
+script = ExtResource( 2 )
+drawer = NodePath("../MazeDrawer")
+map_builder = NodePath("../../LevelMapCreator")
+level_creator = NodePath("../../LevelBuilder")
+
+[node name="Y" type="TextEdit" parent="CanvasLayer/MazeResetController"]
+margin_left = 168.0
+margin_right = 208.0
+margin_bottom = 40.0
+text = "5"
+
+[node name="X" type="TextEdit" parent="CanvasLayer/MazeResetController"]
+margin_left = 103.0
+margin_right = 143.0
+margin_bottom = 40.0
+text = "5"
+
+[connection signal="pressed" from="CanvasLayer/MazeResetController" to="CanvasLayer/MazeResetController" method="_on_MazeResetController_pressed"]

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://level_generation/level_builder/level_chunk/level_chunk.gd" type="Script" id=1]
+[ext_resource path="res://debug_scene/chunks/textures/ur.png" type="Texture" id=2]
+
+[resource]
+script = ExtResource( 1 )
+tilemap = ExtResource( 2 )
+connected_up = true
+connected_right = true
+connected_down = false
+connected_left = false
+spawn_points = [  ]
